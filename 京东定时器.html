@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <style>
+    div {
+      width: 400px;
+      margin: 80px auto;
+    }
+
+    span {
+      float: left;
+      margin-left: 10px;
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      background-color: black;
+      color: #fff;
+      text-align: center;
+      font-size: 25px;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <span class="hour"></span>
+    <span class="minute"></span>
+    <span class="second"></span>
+  </div>
+  <script>
+    let hour = document.querySelector(".hour");
+    let minute = document.querySelector(".minute");
+    let second = document.querySelector(".second");
+    let inputTime = +new Date(2020, 06, 08, 12, 0, 0);  //非字符串,月份6实际是7
+    //   将差值换算为小时分钟毫秒
+    function getTime() {
+      let nowTime = +new Date();
+      let times = (inputTime - nowTime) / 1000;
+      let h = parseInt(times / 60 / 60);
+      h = h < 10 ? "0" + h : h;
+      hour.innerHTML = h;
+      let m = parseInt((times / 60) % 60);
+      m = m < 10 ? "0" + m : m;
+      minute.innerHTML = m;
+      let s = parseInt(times % 60);
+      s = s < 10 ? "0" + s : s;
+      second.innerHTML = s;
+    }
+    // 打开页面时候执行一次代码,后面定时器会在1秒后执行第一次
+    getTime();
+    timeid = setInterval(getTime, 1000);
+  </script>
+</body>
+
+</html>

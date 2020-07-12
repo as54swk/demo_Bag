@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      span {
+        display: inline-block;
+        width: 80px;
+        background-color: #fff;
+        color: black;
+        border-radius: 10px;
+        border: 1px solid black;
+        text-align: center;
+        line-height: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <button class="one">暂停</button>
+    <span></span>
+    <button class="two">继续</button>
+    <script>
+      let span = document.querySelector("span");
+      let one = document.querySelector(".one");
+      let two = document.querySelector(".two");
+      let times = 10 * 60 * 60;
+      time();
+      function time() {
+        let m = parseInt(times / 60 / 60);
+        let s = parseInt((times / 60) % 60);
+        s = s < 10 ? "0" + s : s;
+        span.innerHTML = `${m}:${s}`;
+        times -= 60;
+      }
+      let timeid = setInterval(time, 1000);
+      one.onclick = function() {
+        clearInterval(timeid);
+      };
+      two.onclick = function() {
+        // 在每次初始化定时器之前先执行清除操作，保证之前的定时器被清除了就不会发生越走越快的情况,所以其实并不是定时器越走越快，而是有多个定时器在执行，定时器里面的程序执行的频率提高了。
+        clearInterval(timeid);
+        timeid = setInterval(time, 1000);
+      };
+    </script>
+  </body>
+</html>

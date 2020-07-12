@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>购物车防抖按钮</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <button class="sub">-</button>
+    <span class="total_price">0</span>
+    <button class="add">+</button>
+    <script>
+        var timeout = null;
+        var num = 0;
+        function settlement(num) { //结算 或者调接口
+            return function () {
+                console.log('结算了', num);
+            }
+        }
+        function debounce(fn) { // 防抖
+            if (timeout !== null) {
+                clearTimeout(timeout);
+            }
+            timeout = setTimeout(fn, 2000);
+        }
+        $('.sub').on('click', function () {
+            if (num <= 0) {
+                this.disabled = true;//当数量小于或等于0时候使按钮禁用
+                num = 0;
+            } else {
+                num--;
+            }
+            $('.total_price').text(num);
+            debounce(settlement(num));
+        })
+        $('.add').on('click', function () {
+            debugger;
+            if (num > 0) {
+                $('.sub')[0].disabled = false;
+            }
+            num++;
+            $('.total_price').text(num);
+            debounce(settlement(num));
+        })
+    </script>
+</body>
+
+</html>
